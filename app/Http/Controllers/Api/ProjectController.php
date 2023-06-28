@@ -9,7 +9,9 @@ use Illuminate\Http\Request;
 class ProjectController extends Controller
 {
     public function index(){
-        $projects = Project::All();
+
+        // with and get allow me to extract all the data, bewtween brackets, from the db including relationships
+        $projects = Project::with('category', 'technologies')->get();;
 
         return response()->json([
             'success' => true,
