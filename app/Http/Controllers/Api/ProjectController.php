@@ -21,4 +21,22 @@ class ProjectController extends Controller
             'projects' => $projects,
         ]);
     }
+
+    public function show($slug){
+        // this retrieves a "Project" object from the database with the 'category' and 'technologies' relationships preloaded, based on the value of the 'slug' field.
+        $project = Project::with('category', 'technologies')->where('slug', $slug)->first();
+
+        if ($project){
+            return response()->json([
+                'success' => true,
+                'project' => $project,
+            ]);
+        } else {
+            return response()->json([
+                'success' => false,
+                'project' => 'There are no projects',
+            ]);
+        }
+    }
+
 }

@@ -21,3 +21,6 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/projects', [ProjectController::class, 'index']);
 
+// new route to show a single prj baseon on the slug
+Route::get('/projects/{slug}', [ProjectController::class, 'show']);
+
