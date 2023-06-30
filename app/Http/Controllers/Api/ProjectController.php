@@ -8,13 +8,21 @@ use Illuminate\Http\Request;
 
 class ProjectController extends Controller
 {
-    public function index(){
+    public function index(Request $request){
 
-        // with and get allow me to extract all the data, bewtween brackets, from the db including relationships
-        // $projects = Project::with('category', 'technologies')->get();
+        
+        // this is needed to let the select filter works
+        if($request->has('category_id')){
+            $projects = Project::with('category', 'technologies')->where('category_id', $request->category_id)->paginate(5);
+        } else {
+            $projects = Project::with('category', 'technologies')->paginate(5);
+        }
 
-        // Laravel helps us with pages, now it separates content in diff pages, 5 projects per page
-        $projects = Project::with('category', 'technologies')->paginate(5);
+        // // with and get allow me to extract all the data, bewtween brackets, from the db including relationships
+        // // $projects = Project::with('category', 'technologies')->get();
+
+        // // Laravel helps us with pages, now it separates content in diff pages, 5 projects per page
+        // $projects = Project::with('category', 'technologies')->paginate(5);
 
         return response()->json([
             'success' => true,
