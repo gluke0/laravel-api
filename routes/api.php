@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\ProjectController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -23,4 +24,7 @@ Route::get('/projects', [ProjectController::class, 'index']);
 
 // new route to show a single prj baseon on the slug
 Route::get('/projects/{slug}', [ProjectController::class, 'show']);
+
+// retrieval and display of categories when a GET request is made to that URL
+Route::get('/categories', [CategoryController::class, 'index']);
 

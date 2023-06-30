@@ -35,7 +35,8 @@ class ProjectController extends Controller
             return response()->json([
                 'success' => false,
                 'project' => 'There are no projects',
-            ]);
+            ])->setStatusCode(404); 
+            // adding the error 404 to the network. Showing the page not-found now it is linked to the right error in the console. Without this it would give a 200 ok message cause it landed correclty on the not-found page
         }
     }
 
