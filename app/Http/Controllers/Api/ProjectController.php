@@ -11,19 +11,38 @@ class ProjectController extends Controller
     public function index(Request $request){
 
         
-        // this is needed to let the select filter works
+        // // this is needed to let the select filter works
+        // if($request->has('category_id')){
+        //     $projects = Project::with('category', 'technologies')->where('category_id', $request->category_id)->paginate(5);
+        // } else {
+        //     $projects = Project::with('category', 'technologies')->paginate(5);
+        // }
+
+        // // // with and get allow me to extract all the data, bewtween brackets, from the db including relationships
+        // // // $projects = Project::with('category', 'technologies')->get();
+
+        // // // Laravel helps us with pages, now it separates content in diff pages, 5 projects per page
+        // // $projects = Project::with('category', 'technologies')->paginate(5);
+
+        // return response()->json([
+        //     'success' => true,
+        //     'projects' => $projects,
+        // ]);
+
+
+        $query = Project::with(['category', 'technologies']);
+
         if($request->has('category_id')){
-            $projects = Project::with('category', 'technologies')->where('category_id', $request->category_id)->paginate(5);
-        } else {
-            $projects = Project::with('category', 'technologies')->paginate(5);
+            $query->where('category_id', $request->category_id);
+        }
+        if($request->has('technologies_id')){
+            $techIds = explode(',', $request->technologies_id);
+            $query->whereHas('technologies', function($query) use ($techIds){
+                $query->whereIn('id', $techIds);
+            });
         }
 
-        // // with and get allow me to extract all the data, bewtween brackets, from the db including relationships
-        // // $projects = Project::with('category', 'technologies')->get();
-
-        // // Laravel helps us with pages, now it separates content in diff pages, 5 projects per page
-        // $projects = Project::with('category', 'technologies')->paginate(5);
-
+        $projects = $query->paginate(5);
         return response()->json([
             'success' => true,
             'projects' => $projects,
