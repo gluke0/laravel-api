@@ -35,8 +35,8 @@ class ProjectController extends Controller
         if($request->has('category_id')){
             $query->where('category_id', $request->category_id);
         }
-        if($request->has('technologies_id')){
-            $techIds = explode(',', $request->technologies_id);
+        if($request->has('technologies_ids')){
+            $techIds = explode(',', $request->technologies_ids);
             $query->whereHas('technologies', function($query) use ($techIds){
                 $query->whereIn('id', $techIds);
             });
