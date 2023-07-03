@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\ProjectController;
+use App\Http\Controllers\Api\TechnologyController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -27,4 +28,7 @@ Route::get('/projects/{slug}', [ProjectController::class, 'show']);
 
 // retrieval and display of categories when a GET request is made to that URL
 Route::get('/categories', [CategoryController::class, 'index']);
+
+// retries all the technologies used in prjs in order to filter them 
+Route::get('/technologies', [TechnologyController::class, 'index']);
 
